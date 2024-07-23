@@ -2,7 +2,7 @@
 
 typedef struct Celula_ID {
     int id_doc; //Numero do arquivo em que a palavra esta presente
-    int qdt;
+    int qdt; 
     struct Celula_ID* prox; 
 } Celula_ID;
 
