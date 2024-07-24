@@ -1,5 +1,10 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
 typedef struct Celula_ID {
     int id_doc; //Numero do arquivo em que a palavra esta presente
     int qdt; 

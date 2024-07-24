@@ -1,9 +1,6 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
 
 #include "IndiceInvertido.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 void Inicializa_Lista_ID(Lista_ID_Invertido* Lista_ID_Invertido){ //Estamos utilizando célula cabeça
     Lista_ID_Invertido -> primeiro = (Celula_ID*)malloc(sizeof(Lista_ID_Invertido)); 
