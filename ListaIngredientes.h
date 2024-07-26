@@ -20,6 +20,6 @@ typedef struct {
 void Inicializa_Lista_Ingredientes(Lista_Ingredientes* Lista_Ingredientes);
 int Retorna_Tamanho_Ingrediente(Lista_Ingredientes* Lista_Ingredientes);
 int Verifica_Vazio_Ingrediente(Lista_Ingredientes* Lista_Ingredientes);
-int Adiciona_Ingrediente();
+//void Adiciona_Ingrediente(Lista_Ingredientes* Lista_Ingredientes, char *ingrediente, Lista_ID_Invertido *head_ID);
 
 
