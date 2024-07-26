@@ -1,7 +1,11 @@
+//Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#include "LeituraArquivo.h"
+
 
 void Letra_Minuscula(char *str) { // Funcao para colocar os caracteres em forma minuscula (Nao eh case sensitive)
     for (int i = 0; str[i]; i++) {
@@ -9,27 +13,71 @@ void Letra_Minuscula(char *str) { // Funcao para colocar os caracteres em forma 
     }
 }
 
-int Leitura_Secundaria(char *nomearquivo) {
+
+int Leitura_Receita(char *nomearquivo, char **receita_str) {
     FILE *arq;
     long int tamanho_arquivo;
-    char *receita_str; 
+    
     arq = fopen(nomearquivo, "r");
 
     if (arq == NULL) {
         printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
         return 1;
     }
+
+    // Determina o tamanho do arquivo
+    fseek(arq, 0, SEEK_END);  // Move o ponteiro para o final do arquivo
+    tamanho_arquivo = ftell(arq);  // Obtem a posicao atual do ponteiro (tamanho do arquivo)
+    rewind(arq);  // Volta o ponteiro para o inicio do arquivo
+
+    // Aloca memória para armazenar o conteúdo do arquivo
+    *receita_str = (char *)malloc(tamanho_arquivo + 1); // E uma boa pratica deixar o vetor com uma posicaoo extra 
+    if (*receita_str == NULL) {
+        printf("Erro ao alocar memória para o conteúdo do arquivo.\n");
+        fclose(arq);
+        return 1;
+    }
+    // Passa o conteudo do arquivo para a string
+    fread(*receita_str, 1, tamanho_arquivo, arq);
+    (*receita_str)[tamanho_arquivo] = '\0'; // Adiciona o terminador de string
+    
+    Letra_Minuscula(*receita_str);
+    
+    fclose(arq);
+    return 0;
+}
+
+int Leitura_Secundaria(char *nomearquivo, int i) {
+    char *receita_str = NULL; 
+    
+    //Verifica se a leitura ocorreu de maneira correta
+    if (Leitura_Receita(nomearquivo, &receita_str) != 0) {
+        return 1;
+    }
+    
+    //Imprime a receita
+    //printf("%s\n\n", receita_str);
+    
+    FILE *arq;
+    arq = fopen(nomearquivo, "r");
+
+    if (arq == NULL) {
+        printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
+        free(receita_str); // Liberar a memória antes de sair
+        return 1;
+    }
+
     char ingrediente[100];
     char aux;
     fgets(ingrediente, sizeof(ingrediente), arq);
 
-    
-    while (fscanf(arq, "%99[^.;]", ingrediente) == 1) {
+    while (fscanf(arq, "%[^.;]", ingrediente) == 1) {
+        Letra_Minuscula(ingrediente);
         // Imprime o ingrediente lido
-        printf("Ingrediente: %s\n", ingrediente);
+        //printf("Ingrediente:%s\n", ingrediente);
         
-       // Lê o próximo caractere
-        fscanf(arq, "%c", &aux);
+        // Le o proximo caractere (tira o ; ou .)
+        fscanf(arq, "%c ", &aux);
         
         // Verifica se é o ponto final
         if (aux == '.') {
@@ -37,33 +85,13 @@ int Leitura_Secundaria(char *nomearquivo) {
         }
     }
 
-
-
-/*
-    // Determina o tamanho do arquivo
-    fseek(arq, 0, SEEK_END);  // Move o cursor para o final do arquivo
-    tamanho_arquivo = ftell(arq);  // Obtém a posição atual do cursor (tamanho do arquivo)
-    rewind(arq);  // Volta o cursor para o início do arquivo
-
-    // Aloca memória para armazenar o conteúdo do arquivo
-    receita_str = (char *)malloc(tamanho_arquivo + 1);  // +1 para o caractere nulo '\0'
-    if (receita_str == NULL) {
-        printf("Erro ao alocar memória para o conteúdo do arquivo.\n");
-        fclose(arq);
-        return 1;
-    
-    }
-    // Lê o conteúdo do arquivo para a string
-    fread(receita_str, 1, tamanho_arquivo, arq);
-    Letra_Minuscula(receita_str);
-*/
     fclose(arq);
+    free(receita_str); // Liberar a memoria alocada
     return 0;
 }
 
-
 int Leitura_Principal(char *nomearquivo) {
-    int qtd_arquivos;
+    int qtd_arquivos; 
     char nome_arq[100];
     FILE *arq;
     
@@ -72,11 +100,11 @@ int Leitura_Principal(char *nomearquivo) {
         printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
         return 1;
     }
-
+    //Realiza a leitura do meu arquivo principal 
     fscanf(arq, "%d", &qtd_arquivos);
     for (int i = 0; i < qtd_arquivos; i++) {
         fscanf(arq, "%s", nome_arq);
-        Leitura_Secundaria(nome_arq);
+        Leitura_Secundaria(nome_arq, i); //Realiza a leitura de uma string e passa para para minusculo
     }
 
     fclose(arq);

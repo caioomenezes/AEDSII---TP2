@@ -19,6 +19,6 @@ typedef struct {
 void Inicializa_Lista_ID(Lista_ID_Invertido* Lista_ID_Invertido);
 int Retorna_Tamanho_ID(Lista_ID_Invertido* Lista_ID_Invertido);
 int Verifica_Vazio_ID(Lista_ID_Invertido* Lista_ID_Invertido);
-int Adiciona_ID();
+int Adiciona_ID(Lista_ID_Invertido* Lista_ID_Invertido, int qtd, int id_doc);
 
 
