@@ -1,10 +1,7 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
 #include "LeituraArquivo.h"
+
 
 
 void Letra_Minuscula(char *str) { // Funcao para colocar os caracteres em forma minuscula (Nao eh case sensitive)
@@ -22,10 +19,13 @@ int Frequencia_Ingrediente(char *receita_str, char *nome_ingrediente){ // busca 
         inicio += tam_ingrediente;
         inicio = strstr(inicio, nome_ingrediente);
     }
+
+    /*
     if (qtd_ingrediente == 0){
         printf("Ingrediente nao ta no documento (Funcao Frequencia_ingrediente)\n");
         return 0;
     }
+    */
     return qtd_ingrediente; // Retorna o qtd_ingrediente que será utilizado na construção do índice invertido
 }
 
@@ -63,7 +63,7 @@ int Leitura_Receita(char *nomearquivo, char **receita_str) {
     return 0;
 }
 
-int Leitura_Secundaria(char *nomearquivo, int i) {
+int Leitura_Secundaria(char *nomearquivo, int id_doc) {
     char *receita_str = NULL; 
     
     //Verifica se a leitura ocorreu de maneira correta
@@ -83,16 +83,20 @@ int Leitura_Secundaria(char *nomearquivo, int i) {
         return 1;
     }
 
-    char ingrediente[100];
+    char ingrediente[N];
     char aux;
     int qtd_ingrediente;
     fgets(ingrediente, sizeof(ingrediente), arq);
-
+    
     while (fscanf(arq, "%[^.;]", ingrediente) == 1) {
         qtd_ingrediente = 0;
         Letra_Minuscula(ingrediente);
         qtd_ingrediente = Frequencia_Ingrediente(receita_str, ingrediente);
-        //printf("Qtd do ingrediente %s no doc(%d): %d\n", ingrediente, i+1, qtd_ingrediente); // TESTE FUNCAO FREQUENCIA
+        printf("Qtd do ingrediente %s no doc(%d): %d\n", ingrediente, id_doc+1, qtd_ingrediente); // TESTE FUNCAO FREQUENCIA
+        Insere(ingrediente, p, TabelaIngredientes, qtd_ingrediente, id_doc);
+
+        //printf("ok\n");
+
         // CHAMAR EM SEGUIDA A FUNÇAO DE CONSTRUÇAO DO INDICE INVERTIDO
 
         // Imprime o ingrediente lido
@@ -124,6 +128,7 @@ int Leitura_Principal(char *nomearquivo) {
     }
     //Realiza a leitura do meu arquivo principal 
     fscanf(arq, "%d", &qtd_arquivos);
+    
     for (int i = 0; i < qtd_arquivos; i++) {
         fscanf(arq, "%s", nome_arq);
         Leitura_Secundaria(nome_arq, i); //Realiza a leitura de uma string e passa para para minusculo
@@ -135,8 +140,12 @@ int Leitura_Principal(char *nomearquivo) {
 }
 
 int main() {
+    Inicializa_Hash(TabelaIngredientes);
+    GeraPesos(p);
+    
     char *nome = "entrada.txt";
+    
     Leitura_Principal(nome);
-
+    //Imprime_Hash(TabelaIngredientes);
     return 0;
 }

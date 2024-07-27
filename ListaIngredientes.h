@@ -4,10 +4,14 @@
 e carregam, além da palavra, a lista encadeada dos índices invertidos*/ 
 
 #include "IndiceInvertido.h"
-#define N  100  // Tamanho maximo de uma palavra
+#include <string.h>
+#define N  100 // Tamanho maximo de uma palavra
+
+typedef struct Lista_Ingredientes *TipoApontador;
+typedef char nome_ingrediente[N];
 
 typedef struct Celula_Ingrediente {
-    char ingredinte[N];
+    nome_ingrediente Chave;
     Lista_ID_Invertido *head_ID;
     struct Celula_Ingrediente* prox;
 } Celula_Ingrediente;
@@ -17,9 +21,10 @@ typedef struct {
     Celula_Ingrediente* ultimo;
 } Lista_Ingredientes;
 
-void Inicializa_Lista_Ingredientes(Lista_Ingredientes* Lista_Ingredientes);
-int Retorna_Tamanho_Ingrediente(Lista_Ingredientes* Lista_Ingredientes);
-int Verifica_Vazio_Ingrediente(Lista_Ingredientes* Lista_Ingredientes);
-//void Adiciona_Ingrediente(Lista_Ingredientes* Lista_Ingredientes, char *ingrediente, Lista_ID_Invertido *head_ID);
-
+void Inicializa_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes);
+int Retorna_Tamanho_Ingredientes(Lista_Ingredientes* listaIngredientes);
+Celula_Ingrediente *Pesquisa_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente ingrediente);
+void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente ingrediente, int qtd_ingredientes, int id_doc);
+void Imprime_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes);
+int Verifica_Vazio_Ingredientes(Lista_Ingredientes* listaIngredientes);
 

@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 typedef struct Celula_ID {
     int id_doc; //Numero do arquivo em que a palavra esta presente
     int qdt; 
@@ -16,9 +15,9 @@ typedef struct {
     Celula_ID* ultimo;
 } Lista_ID_Invertido;
 
-void Inicializa_Lista_ID(Lista_ID_Invertido* Lista_ID_Invertido);
-int Retorna_Tamanho_ID(Lista_ID_Invertido* Lista_ID_Invertido);
-int Verifica_Vazio_ID(Lista_ID_Invertido* Lista_ID_Invertido);
-void Adiciona_ID(Lista_ID_Invertido* Lista_ID_Invertido, int qtd, int id_doc);
+void Inicializa_Lista_ID(Lista_ID_Invertido* listaIdInvertido);
+int Retorna_Tamanho_ID(Lista_ID_Invertido* listaIdInvertido);
+int Verifica_Vazio_ID(Lista_ID_Invertido* listaIdInvertido);
+void Adiciona_ID(Lista_ID_Invertido* listaIdInvertido, int qtd, int id_doc);
 
 
