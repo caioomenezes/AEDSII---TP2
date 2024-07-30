@@ -69,7 +69,8 @@ void Imprime_Lista_Ingredientes(Lista_Ingredientes *listaIngredientes){
     while (Aux != NULL) { 
         printf("%.*s ", N, Aux->Chave);
         Aux = Aux->prox;
+  
     }
-}
+} 
 
  
