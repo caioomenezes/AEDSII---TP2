@@ -92,7 +92,7 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc) {
         qtd_ingrediente = 0;
         Letra_Minuscula(ingrediente);
         qtd_ingrediente = Frequencia_Ingrediente(receita_str, ingrediente);
-        printf("Qtd do ingrediente %s no doc(%d): %d\n", ingrediente, id_doc+1, qtd_ingrediente); // TESTE FUNCAO FREQUENCIA
+        //printf("Qtd do ingrediente %s no doc(%d): %d\n", ingrediente, id_doc+1, qtd_ingrediente); // TESTE FUNCAO FREQUENCIA
         Insere(ingrediente, p, TabelaIngredientes, qtd_ingrediente, id_doc);
 
         //printf("ok\n");
@@ -146,6 +146,6 @@ int main() {
     char *nome = "entrada.txt";
     
     Leitura_Principal(nome);
-    //Imprime_Hash(TabelaIngredientes);
+    Imprime_Hash(TabelaIngredientes);
     return 0;
 }

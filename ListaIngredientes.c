@@ -24,7 +24,7 @@ int Retorna_Tamanho_Ingredientes(Lista_Ingredientes* listaIngredientes){
         tamanho += 1;   // Somamos um ao tamanho
         auxiliar = auxiliar -> prox; // Avancamos para a proxima Celula_Ingrediente da lista
     }
-    return tamanho;
+    return tamanho;  
 }
 
 
@@ -43,23 +43,25 @@ Celula_Ingrediente *Pesquisa_Ingrediente(Lista_Ingredientes* listaIngredientes, 
 }
 
 
-void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente ingrediente, int qtd_ingredientes, int id_doc){
-    
-    listaIngredientes -> ultimo -> prox = (Celula_Ingrediente*)malloc(sizeof(Celula_Ingrediente)); //Ligando minha nova celula a anterior a ela (antiga ultima)
-    listaIngredientes -> ultimo = listaIngredientes -> ultimo -> prox; //Atualizando o meu ultimo para a nova celula alocada
-    
-    strcpy(listaIngredientes->ultimo->Chave, ingrediente); //strcpy para copiar o valor de ingrediente para chave
+void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente ingrediente, int qtd_ingredientes, int id_doc) {
+    // Alocar memória para a nova célula e conectar à lista existente
+    listaIngredientes->ultimo->prox = (Celula_Ingrediente*)malloc(sizeof(Celula_Ingrediente));
+    listaIngredientes->ultimo = listaIngredientes->ultimo->prox;
 
-    //Eu preciso criar e inicializar minha lista de ids aqui  porque eu chamo Adiciona_Ingredientes apenas quando meu ingrediente ainda nao esta na lista 
-    //encadeada (primeira vez que ele foi lido nos arquivos), logo a lista de id dessa celula ainda nao existe
-    Lista_ID_Invertido *listaIdInvertido;
-    Inicializa_Lista_ID(listaIdInvertido);
+    // Copiar o nome do ingrediente para a chave da nova célula
+    strcpy(listaIngredientes->ultimo->Chave, ingrediente);
+
+    // Inicializar a lista de IDs invertidos para esta célula
+    Lista_ID_Invertido* listaIdInvertido = (Lista_ID_Invertido*)malloc(sizeof(Lista_ID_Invertido)); // Alocar memória
+    Inicializa_Lista_ID(listaIdInvertido); // Inicializar a lista
     listaIngredientes->ultimo->head_ID = listaIdInvertido;
 
-    //Apos criar minha lista de ids devo adicionar as iformacoes do indice invertido nela 
+    // Adicionar o ID do documento na lista de IDs
     Adiciona_ID(listaIdInvertido, qtd_ingredientes, id_doc);
-    printf("adicionando %d %d \n", listaIngredientes->ultimo->head_ID->ultimo->id_doc, listaIngredientes->ultimo->head_ID->ultimo->qdt);
-    listaIngredientes -> ultimo -> prox = NULL; //Como o prox do ultimo nao aponta para nada, passamos NULL
+    printf("adicionando %d\n", listaIngredientes->ultimo->head_ID->ultimo->id_doc);
+
+    // Marcar o final da lista
+    listaIngredientes->ultimo->prox = NULL;
 }
 
 void Imprime_Lista_Ingredientes(Lista_Ingredientes *listaIngredientes){

@@ -28,12 +28,17 @@ int Retorna_Tamanho_ID(Lista_ID_Invertido* listaIdInvertido){
 }
 
 void Adiciona_ID(Lista_ID_Invertido* listaIdInvertido, int qtd, int id_doc){
+
     listaIdInvertido -> ultimo -> prox = (Celula_ID*)malloc(sizeof(Celula_ID)); //Ligando minha nova celula a anterior a ela (antiga ultima)
+    
     listaIdInvertido -> ultimo = listaIdInvertido -> ultimo -> prox; //Atualizando o meu ultimo para a nova celula alocada
     
     //adicionando indice invertido:
     listaIdInvertido -> ultimo -> qdt = qtd; 
+    
     listaIdInvertido -> ultimo -> id_doc = id_doc;
-
+    
     listaIdInvertido -> ultimo -> prox = NULL; //Como o prox do ultimo nao aponta para nada, passamos NULL
+    printf("%d %d\n", listaIdInvertido->ultimo->id_doc, listaIdInvertido->ultimo->qdt);
+
 }
