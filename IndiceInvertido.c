@@ -3,7 +3,7 @@
 #include "IndiceInvertido.h"
 
 void Inicializa_Lista_ID(Lista_ID_Invertido* listaIdInvertido){ //Estamos utilizando célula cabeça
-    listaIdInvertido -> primeiro = (Celula_ID*)malloc(sizeof(listaIdInvertido)); 
+    listaIdInvertido -> primeiro = (Celula_ID*)malloc(sizeof(Celula_ID)); 
     listaIdInvertido -> ultimo = listaIdInvertido -> primeiro; 
     listaIdInvertido -> primeiro -> prox = NULL; 
     //Para a lista estar vazia ultimo e proximo terao que apontar
@@ -39,6 +39,6 @@ void Adiciona_ID(Lista_ID_Invertido* listaIdInvertido, int qtd, int id_doc){
     listaIdInvertido -> ultimo -> id_doc = id_doc;
     
     listaIdInvertido -> ultimo -> prox = NULL; //Como o prox do ultimo nao aponta para nada, passamos NULL
-    printf("%d %d\n", listaIdInvertido->ultimo->id_doc, listaIdInvertido->ultimo->qdt);
+    //printf("%d %d\n", listaIdInvertido->ultimo->id_doc, listaIdInvertido->ultimo->qdt);
 
 }

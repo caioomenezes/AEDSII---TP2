@@ -149,3 +149,13 @@ int main() {
     Imprime_Hash(TabelaIngredientes);
     return 0;
 }
+
+void Imprime_Indice_Invertido(Lista_ID_Invertido* listaIdInvertido){
+    Celula_ID *Aux = (listaIdInvertido -> primeiro->prox);
+    while (Aux != NULL) { 
+        printf("(<%d,%d> -> ", Aux->qdt, Aux->id_doc+1);
+        Aux = Aux->prox;
+    }
+    printf("NULL)");
+    
+} 

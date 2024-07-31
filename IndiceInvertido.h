@@ -19,5 +19,6 @@ void Inicializa_Lista_ID(Lista_ID_Invertido* listaIdInvertido);
 int Retorna_Tamanho_ID(Lista_ID_Invertido* listaIdInvertido);
 int Verifica_Vazio_ID(Lista_ID_Invertido* listaIdInvertido);
 void Adiciona_ID(Lista_ID_Invertido* listaIdInvertido, int qtd, int id_doc);
+void Imprime_Indice_Invertido(Lista_ID_Invertido* listaIdInvertido);
 
 

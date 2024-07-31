@@ -47,10 +47,11 @@ void Insere(nome_ingrediente ingrediente, Pesos p, Hash TabelaIngredientes, int 
 
 void Imprime_Hash(Hash TabelaIngredientes){
    
-  for (int i = 0; i < M; i++) 
-    { printf("%d: ", i);
-      if (!Verifica_Vazio_Ingredientes(&TabelaIngredientes[i]))
+  for (int i = 0; i < M; i++){ 
+    printf("%d: ", i+1);
+    if (!Verifica_Vazio_Ingredientes(&TabelaIngredientes[i])){
       Imprime_Lista_Ingredientes(&TabelaIngredientes[i]);
-      putchar('\n');
     }
+    putchar('\n');
+  }
 } 

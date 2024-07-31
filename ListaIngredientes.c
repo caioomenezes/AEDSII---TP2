@@ -3,7 +3,7 @@
 #include "ListaIngredientes.h"
 
 void Inicializa_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes){ //Estamos utilizando celula cabeca
-    listaIngredientes -> primeiro = (Celula_Ingrediente*)malloc(sizeof(listaIngredientes)); 
+    listaIngredientes -> primeiro = (Celula_Ingrediente*)malloc(sizeof(Celula_Ingrediente)); 
     listaIngredientes -> ultimo = listaIngredientes -> primeiro; 
     listaIngredientes -> primeiro -> prox = NULL; 
     // Para a lista estar vazia ultimo e proximo terao que apontar
@@ -58,19 +58,21 @@ void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingredient
 
     // Adicionar o ID do documento na lista de IDs
     Adiciona_ID(listaIdInvertido, qtd_ingredientes, id_doc);
-    printf("adicionando %d\n", listaIngredientes->ultimo->head_ID->ultimo->id_doc);
+    //printf("adicionando %d\n", listaIngredientes->ultimo->head_ID->ultimo->id_doc);
 
     // Marcar o final da lista
     listaIngredientes->ultimo->prox = NULL;
 }
 
-void Imprime_Lista_Ingredientes(Lista_Ingredientes *listaIngredientes){
-    Celula_Ingrediente *Aux = (listaIngredientes -> primeiro->prox);
+void Imprime_Lista_Ingredientes(Lista_Ingredientes *listaIngredientes) {
+    Celula_Ingrediente *Aux = listaIngredientes->primeiro->prox;  // Começa no primeiro elemento real
+    //printf("Primeiro elemento: %s", listaIngredientes->primeiro->prox->Chave);
     while (Aux != NULL) { 
-        printf("%.*s ", N, Aux->Chave);
-        Aux = Aux->prox;
-  
+        printf("[%.*s ", N, Aux->Chave);  // Imprime o nome do ingrediente
+        Imprime_Indice_Invertido(Aux->head_ID);  // Imprime o indice invertido
+        printf("] -> ");
+        Aux = Aux->prox;  // Avança para o próximo elemento
     }
-} 
-
- 
+    printf("NULL");
+    
+}
