@@ -10,22 +10,20 @@ void Letra_Minuscula(char *str) { // Funcao para colocar os caracteres em forma 
     }
 }
 
-int Frequencia_Ingrediente(char *receita_str, char *nome_ingrediente){ // busca e contabiliza as aparições de um ingrediente no documento
+int Frequencia_Ingrediente(char *receita_str, char *nome_ingrediente){
+    /* Busca e contabiliza as aparicoes de um ingrediente no documento com auxilio da funcao strstr(),
+    que retorna um ponteiro para a primeira ocorrencia do caracter inicial da palavra (que no nosso vetorzao eh uma
+    cadeia de caracteres) que estamos buscando.
+    */
     int tam_ingrediente = strlen(nome_ingrediente);
     int qtd_ingrediente = 0;
     char *inicio = strstr(receita_str, nome_ingrediente);
     while(inicio != NULL){ // O ponteiro passa sobre a receita procurando o ingr. enquanto não chegar no final do doc
         qtd_ingrediente++;
-        inicio += tam_ingrediente;
-        inicio = strstr(inicio, nome_ingrediente);
+        inicio += tam_ingrediente; // Atualiza o ponteiro para que ele consiga percorrer o vetor inteiro.
+        inicio = strstr(inicio, nome_ingrediente); /* Pesquisa novamente a palavra apos a atualizacao do ponteiro, pois a funcao
+        strstr() retorna apenas a PRIMEIRA aparicao da palavra no vetor, entao tivemos que adaptar */
     }
-
-    /*
-    if (qtd_ingrediente == 0){
-        printf("Ingrediente nao ta no documento (Funcao Frequencia_ingrediente)\n");
-        return 0;
-    }
-    */
     return qtd_ingrediente; // Retorna o qtd_ingrediente que será utilizado na construção do índice invertido
 }
 
