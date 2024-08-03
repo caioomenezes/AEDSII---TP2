@@ -1,12 +1,11 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
 
-#include<stdlib.h> 
-#include<stdio.h>
 #include <sys/time.h>
 #include <string.h>
 #define N 100
 
-typedef char nome_ingrediente[N];
+#include "IDPat.h"
+typedef char* nome_ingrediente_pat;
 typedef char TipoBit;
 
 typedef enum {
@@ -23,14 +22,19 @@ typedef struct TipoPatNo {
       TipoBit BitDiferenciador;
       TipoArvore Esq, Dir; //Arvore esq e dir, significa que o resto da palavra depois do prefixo
       char LetraDiferenciadora;
-      } NoInterno ;
-      nome_ingrediente Chave;
+    } NoInterno ;
+    //Lista_ID_Invertido_Pat *head_ID;
+    nome_ingrediente_pat Chave;
   } No;
+  Lista_ID_Invertido_Pat *head_ID;
 } TipoPatNo; 
 
-TipoBit RetornaBit(TipoBit i, nome_ingrediente Chave);/* Retorna o i-esimo TipoBit da chave k a partir da esquerda */
+
+TipoBit RetornaBit(TipoBit i, nome_ingrediente_pat Chave);/* Retorna o i-esimo TipoBit da chave k a partir da esquerda */
 short Retorna_TipoNo(TipoArvore no);
 TipoArvore CriaNoInt(int i, char letra, TipoArvore *Esq,  TipoArvore *Dir);
-TipoArvore CriaNoExt(nome_ingrediente Chave);
-TipoArvore InsereEntre(nome_ingrediente Chave, TipoArvore *pat, int i, char letra_diferenciadora);
-TipoArvore Insere(nome_ingrediente Chave, TipoArvore *pat);
+TipoArvore CriaNoExt(nome_ingrediente_pat Chave, int qtd_ingredientes, int id_doc);
+TipoArvore InsereEntre(nome_ingrediente_pat Chave, TipoArvore *pat, int i, char letra_diferenciadora, int qtd_ingredientes, int id_doc);
+TipoArvore Insere_Pat(nome_ingrediente_pat Chave, TipoArvore *pat, int qtd_ingredientes, int id_doc);
+void Imprime_Pat(TipoArvore arvore, int* i);
+void Inicializa_Pat(TipoArvore* arvore);

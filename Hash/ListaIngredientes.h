@@ -3,16 +3,16 @@
 /* Lista Encadeada dos Ingredientes que estão na Hash
 e carregam, além da palavra, a lista encadeada dos índices invertidos*/ 
 
-#include "IndiceInvertido.h"
+#include "IDHash.h"
 #include <string.h>
 #define N  100 // Tamanho maximo de uma palavra
 
 typedef struct Lista_Ingredientes *TipoApontador;
-typedef char nome_ingrediente[N];
+typedef char nome_ingrediente_hash[N];
 
 typedef struct Celula_Ingrediente {
-    nome_ingrediente Chave;
-    Lista_ID_Invertido *head_ID;
+    nome_ingrediente_hash Chave;
+    Lista_ID_Invertido_Hash *head_ID;
     struct Celula_Ingrediente* prox;
 } Celula_Ingrediente;
 
@@ -23,8 +23,8 @@ typedef struct {
 
 void Inicializa_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes);
 int Retorna_Tamanho_Ingredientes(Lista_Ingredientes* listaIngredientes);
-Celula_Ingrediente *Pesquisa_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente ingrediente);
-void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente ingrediente, int qtd_ingredientes, int id_doc);
+Celula_Ingrediente *Pesquisa_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente_hash ingrediente);
+void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingrediente_hash ingrediente, int qtd_ingredientes, int id_doc);
 void Imprime_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes);
 int Verifica_Vazio_Ingredientes(Lista_Ingredientes* listaIngredientes);
 

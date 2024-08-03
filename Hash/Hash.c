@@ -15,7 +15,7 @@ void GeraPesos(Pesos MatrizPesos){
   }
 }
   
-unsigned int HashingUniversal(nome_ingrediente Chave, Pesos MatrizPesos){ 
+unsigned int HashingUniversal(nome_ingrediente_hash Chave, Pesos MatrizPesos){ 
   unsigned int soma = 0; 
 
   int tamanho = strlen(Chave); //Tamanho da minha string (chave e um nome)
@@ -33,15 +33,16 @@ void Inicializa_Hash(Hash TabelaIngredientes){
   } 
 }
 
-void Insere(nome_ingrediente ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_doc){ 
+void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_doc){ 
   
   unsigned int i = HashingUniversal(ingrediente, p); //Calcula a posicao onde o ingrediente vai ser inserido
   Celula_Ingrediente *aux = Pesquisa_Ingrediente(&TabelaIngredientes[i], ingrediente); // Pesquisamos se o ingrediente já existe na lista de ingredientes
   if (aux == NULL){ // Se o ingrediente não exister na lista
+    
     Adiciona_Ingrediente(&TabelaIngredientes[i], ingrediente, qtd_ingrediente, id_doc); //Adciona o ingrediente de acordo com a posicao retornada pelo hashing universal
   }
   else {
-    Adiciona_ID(aux->head_ID, qtd_ingrediente, id_doc); //Caso o ingrediente já esteja em alguma posicao da hash adcionamos apenas o indice invertido
+    Adiciona_ID_Hash(aux->head_ID, qtd_ingrediente, id_doc); //Caso o ingrediente já esteja em alguma posicao da hash adicionamos apenas o indice invertido
   }
   
 }

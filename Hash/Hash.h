@@ -13,9 +13,9 @@ typedef unsigned Pesos[N][TAMALFABETO];
 typedef Lista_Ingredientes Hash[M];
 
 void GeraPesos(Pesos MatrizPesos);
-unsigned int HashingUniversal(nome_ingrediente Chave, Pesos MatrizPesos);
+unsigned int HashingUniversal(nome_ingrediente_hash Chave, Pesos MatrizPesos);
 void Inicializa_Hash(Hash TabelaIngredientes);
-void Insere(nome_ingrediente ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_Doc);
+void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_Doc);
 void Imprime_Hash(Hash TabelaIngredientes);
 
 

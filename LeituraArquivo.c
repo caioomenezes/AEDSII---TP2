@@ -3,7 +3,6 @@
 #include "LeituraArquivo.h"
 
 
-
 void Letra_Minuscula(char *str) { // Funcao para colocar os caracteres em forma minuscula (Nao eh case sensitive)
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
@@ -30,9 +29,16 @@ int Frequencia_Ingrediente(char *receita_str, char *nome_ingrediente){
 
 int Leitura_Receita(char *nomearquivo, char **receita_str) {
     FILE *arq;
+    char caminhoCompleto[100] = "ArquivosdeEntrada/"; // Caminho base
+
+    // Concatenar o nome do arquivo ao caminho base
+    strcat(caminhoCompleto, nomearquivo);
+
+    // Abrir o arquivo para leitura
+    arq = fopen(caminhoCompleto, "r");
     long int tamanho_arquivo;
     
-    arq = fopen(nomearquivo, "r");
+    //arq = fopen(nomearquivo, "r");
 
     if (arq == NULL) {
         printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
@@ -71,9 +77,15 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc) {
     
     //Imprime a receita
     //printf("%s\n\n", receita_str);
-    
+    char caminhoCompleto[100] = "ArquivosdeEntrada/"; // Caminho base
+
+    // Concatenar o nome do arquivo ao caminho base
+    strcat(caminhoCompleto, nomearquivo);
     FILE *arq;
-    arq = fopen(nomearquivo, "r");
+    // Abrir o arquivo para leitura
+    arq = fopen(caminhoCompleto, "r");
+   
+    //arq = fopen(nomearquivo, "r");
 
     if (arq == NULL) {
         printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
@@ -91,8 +103,8 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc) {
         Letra_Minuscula(ingrediente);
         qtd_ingrediente = Frequencia_Ingrediente(receita_str, ingrediente);
         //printf("Qtd do ingrediente %s no doc(%d): %d\n", ingrediente, id_doc+1, qtd_ingrediente); // TESTE FUNCAO FREQUENCIA
-        Insere(ingrediente, p, TabelaIngredientes, qtd_ingrediente, id_doc);
-
+        Insere_Hash(ingrediente, p, TabelaIngredientes, qtd_ingrediente, id_doc);
+        Pat = Insere_Pat(ingrediente, &Pat, qtd_ingrediente, id_doc);
         //printf("ok\n");
 
         // CHAMAR EM SEGUIDA A FUNÇAO DE CONSTRUÇAO DO INDICE INVERTIDO
@@ -139,21 +151,19 @@ int Leitura_Principal(char *nomearquivo) {
 
 int main() {
     Inicializa_Hash(TabelaIngredientes);
+    Inicializa_Pat(&Pat);
     GeraPesos(p);
     
-    char *nome = "entrada.txt";
+    char *nome = "ArquivosdeEntrada/entrada.txt";
     
     Leitura_Principal(nome);
+    
     Imprime_Hash(TabelaIngredientes);
+    int i = 0; // Inicializa o contador de índices
+    putchar('\n');
+    Imprime_Pat(Pat, &i);
+
     return 0;
 }
 
-void Imprime_Indice_Invertido(Lista_ID_Invertido* listaIdInvertido){
-    Celula_ID *Aux = (listaIdInvertido -> primeiro->prox);
-    while (Aux != NULL) { 
-        printf("(<%d,%d> -> ", Aux->qdt, Aux->id_doc+1);
-        Aux = Aux->prox;
-    }
-    printf("NULL)");
-    
-} 
+   

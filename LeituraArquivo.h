@@ -4,10 +4,12 @@
 #include <string.h>
 #include <ctype.h>
 */
-#include "Hash.h"
+#include "Hash/Hash.h"
+#include "Pat/Patricia.h"
 #include <ctype.h>
 Pesos p;
 Hash TabelaIngredientes;
+TipoArvore Pat;
 
 void Letra_Minuscula(char *str); // Transforma todas as letras da string em minusculas
 int Leitura_Receita(char *nomearquivo, char **receita_str); //  Le a receita e copia para uma string
