@@ -67,7 +67,7 @@ int Leitura_Receita(char *nomearquivo, char **receita_str) {
     return 0;
 }
 
-int Leitura_Secundaria(char *nomearquivo, int id_doc) {
+int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documentos) {
     char *receita_str = NULL; 
     
     //Verifica se a leitura ocorreu de maneira correta
@@ -95,9 +95,9 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc) {
 
     char ingrediente[N];
     char aux;
-    int qtd_ingrediente;
+    int qtd_ingrediente, total_ingredientes = 0;
     fgets(ingrediente, sizeof(ingrediente), arq);
-    
+    total_ingredientes ++;
     while (fscanf(arq, "%[^.;]", ingrediente) == 1) {
         qtd_ingrediente = 0;
         Letra_Minuscula(ingrediente);
@@ -119,14 +119,16 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc) {
         if (aux == '.') {
             break;  // Sai do loop ao encontrar o ponto final
         }
+        total_ingredientes ++;
+        
     }
-
+    (*qtd_termos_documentos)[id_doc] = total_ingredientes;
     fclose(arq);
     free(receita_str); // Liberar a memoria alocada
     return 0;
 }
 
-int Leitura_Principal(char *nomearquivo) {
+int Leitura_Principal(char *nomearquivo, int** qtd_termos_documentos, int* total_de_arquivos) {
     int qtd_arquivos; 
     char nome_arq[100];
     FILE *arq;
@@ -137,11 +139,12 @@ int Leitura_Principal(char *nomearquivo) {
         return 1;
     }
     //Realiza a leitura do meu arquivo principal 
-    fscanf(arq, "%d", &qtd_arquivos);
-    
-    for (int i = 0; i < qtd_arquivos; i++) {
+    fscanf(arq, "%d", total_de_arquivos);
+
+    *qtd_termos_documentos = (int*)malloc((*total_de_arquivos) * sizeof(int)); //Ajusta o tamanho do vetor para a qtd de documentos
+    for (int i = 0; i < (*total_de_arquivos); i++) {
         fscanf(arq, "%s", nome_arq);
-        Leitura_Secundaria(nome_arq, i); //Realiza a leitura de uma string e passa para para minusculo
+        Leitura_Secundaria(nome_arq, i, qtd_termos_documentos); //Realiza a leitura de uma string e passa para para minusculo
     }
 
     fclose(arq);
@@ -149,19 +152,25 @@ int Leitura_Principal(char *nomearquivo) {
     return 0;
 }
 
+
+
 int main() {
     Inicializa_Hash(TabelaIngredientes);
     Inicializa_Pat(&Pat);
     GeraPesos(p);
-    
+    int *qtd_termos_documentos; //Quantidade de ingredientes no documento ID_DOC, cada índice representa o número de cada documento
+    int total_de_arquivos=0;
     char *nome = "ArquivosdeEntrada/entrada.txt";
+
+    Leitura_Principal(nome, &qtd_termos_documentos, &total_de_arquivos);
     
-    Leitura_Principal(nome);
-    
-    Imprime_Hash_Ordenada(TabelaIngredientes);
+    for(int i = 0; i < total_de_arquivos; i++){
+        printf("%d - %d\n" , i+1, qtd_termos_documentos[i]);
+    }
+    //Imprime_Hash_Ordenada(TabelaIngredientes);
     int i = 0; // Inicializa o contador de índices
-    putchar('\n');
-    Imprime_Pat(Pat, &i);
+    //putchar('\n');
+    //Imprime_Pat(Pat, &i);
 
     return 0;
 }

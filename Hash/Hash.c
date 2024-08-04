@@ -39,7 +39,7 @@ void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredie
   Celula_Ingrediente *aux = Pesquisa_Ingrediente(&TabelaIngredientes[i], ingrediente); // Pesquisamos se o ingrediente já existe na lista de ingredientes
   if (aux == NULL){ // Se o ingrediente não exister na lista
     
-    Adiciona_Ingrediente(&TabelaIngredientes[i], ingrediente, qtd_ingrediente, id_doc); //Adciona o ingrediente de acordo com a posicao retornada pelo hashing universal
+    Adiciona_Ingrediente(&TabelaIngredientes[i], ingrediente, qtd_ingrediente, id_doc); //Adiciona o ingrediente de acordo com a posicao retornada pelo hashing universal
   }
   else {
     Adiciona_ID_Hash(aux->head_ID, qtd_ingrediente, id_doc); //Caso o ingrediente já esteja em alguma posicao da hash adicionamos apenas o indice invertido
@@ -47,19 +47,22 @@ void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredie
   
 }
 
+//Compara os ingredientes para ordenar através do qsort
 int compararIngredientes(const void* a, const void* b) {
     // Converte os ponteiros para ponteiros de Celula_Ingrediente
     const Celula_Ingrediente* celulaA = *(const Celula_Ingrediente**)a;
     const Celula_Ingrediente* celulaB = *(const Celula_Ingrediente**)b;
 
-    // Compara as chaves das duas células
+    // Compara as chaves das duas células(nome dos ingredientes)
     return strcmp(celulaA->Chave, celulaB->Chave);
 }
 
+//Copia os ingredientes da Hash para um vetor
 void CopiaHash(Hash TabelaIngredientes, int* contador, Celula_Ingrediente** vetor_hash){
   Celula_Ingrediente* aux;
-  (*contador) = 0;
+  (*contador) = 0; //Conta quantos ingredientes temos
   for (int i = 0; i < M; i++){
+    // Começa a partir do primeiro ingrediente na lista ignorando a cabeça
     aux = TabelaIngredientes[i].primeiro->prox;
     while(aux != NULL){
       vetor_hash[*contador] = aux;
@@ -73,6 +76,7 @@ void CopiaHash(Hash TabelaIngredientes, int* contador, Celula_Ingrediente** veto
 void Imprime_Hash_Ordenada(Hash TabelaIngredientes){
   int contador;
   Celula_Ingrediente* vetor_hash[46];
+  // Copia os valores da tabela hash para o vetor
   CopiaHash(TabelaIngredientes, &contador, vetor_hash);
   
   // Ordena o vetor de ponteiros usando qsort

@@ -28,4 +28,3 @@ void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingredient
 void Imprime_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes);
 int Verifica_Vazio_Ingredientes(Lista_Ingredientes* listaIngredientes);
 void Imprime_Ingrediente(int contador, Celula_Ingrediente** vetor_hash);
-
