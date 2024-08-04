@@ -47,6 +47,42 @@ void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredie
   
 }
 
+int compararIngredientes(const void* a, const void* b) {
+    // Converte os ponteiros para ponteiros de Celula_Ingrediente
+    const Celula_Ingrediente* celulaA = *(const Celula_Ingrediente**)a;
+    const Celula_Ingrediente* celulaB = *(const Celula_Ingrediente**)b;
+
+    // Compara as chaves das duas células
+    return strcmp(celulaA->Chave, celulaB->Chave);
+}
+
+void CopiaHash(Hash TabelaIngredientes, int* contador, Celula_Ingrediente** vetor_hash){
+  Celula_Ingrediente* aux;
+  (*contador) = 0;
+  for (int i = 0; i < M; i++){
+    aux = TabelaIngredientes[i].primeiro->prox;
+    while(aux != NULL){
+      vetor_hash[*contador] = aux;
+      aux = aux->prox;
+      (*contador)++;
+    } 
+  }
+}
+
+
+void Imprime_Hash_Ordenada(Hash TabelaIngredientes){
+  int contador;
+  Celula_Ingrediente* vetor_hash[46];
+  CopiaHash(TabelaIngredientes, &contador, vetor_hash);
+  
+  // Ordena o vetor de ponteiros usando qsort
+  qsort(vetor_hash, contador, sizeof(Celula_Ingrediente*), compararIngredientes);
+  
+  // Imprime o vetor ordenado
+  Imprime_Ingrediente(contador, vetor_hash);
+
+} 
+
 void Imprime_Hash(Hash TabelaIngredientes){
    
   for (int i = 0; i < M; i++){ 

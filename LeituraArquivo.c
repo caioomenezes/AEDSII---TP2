@@ -158,7 +158,7 @@ int main() {
     
     Leitura_Principal(nome);
     
-    Imprime_Hash(TabelaIngredientes);
+    Imprime_Hash_Ordenada(TabelaIngredientes);
     int i = 0; // Inicializa o contador de índices
     putchar('\n');
     Imprime_Pat(Pat, &i);

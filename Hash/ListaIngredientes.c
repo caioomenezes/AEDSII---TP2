@@ -76,3 +76,13 @@ void Imprime_Lista_Ingredientes(Lista_Ingredientes *listaIngredientes) {
     printf("NULL");
     
 }
+
+void Imprime_Ingrediente(int contador, Celula_Ingrediente** vetor_hash){
+      // Imprime o vetor ordenado
+  for (int j = 0; j < contador; j++) {
+    printf("%02d: ", j+1); // printa o idice formatado, com duas casas decimais
+    printf("%s ", vetor_hash[j]->Chave);
+    Imprime_Indice_Invertido_Hash(vetor_hash[j]->head_ID);
+    putchar('\n');
+  }
+}

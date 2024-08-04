@@ -17,6 +17,7 @@ unsigned int HashingUniversal(nome_ingrediente_hash Chave, Pesos MatrizPesos);
 void Inicializa_Hash(Hash TabelaIngredientes);
 void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_Doc);
 void Imprime_Hash(Hash TabelaIngredientes);
-
-
+void Imprime_Hash_Ordenada(Hash TabelaIngredientes);
+int compararIngredientes(const void* a, const void* b);
+void CopiaHash(Hash TabelaIngredientes, int* contador, Celula_Ingrediente** vetor_hash);
 

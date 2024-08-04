@@ -1,2 +1,3 @@
-compile-run: LeituraArquivo.c Hash.c ListaIngredientes.c IndiceInvertido.c 
-	gcc -o run LeituraArquivo.c Hash.c ListaIngredientes.c IndiceInvertido.c && ./run
+compile-run: LeituraArquivo.c Hash/Hash.c Hash/ListaIngredientes.c Hash/IDHash.c Pat/Patricia.c Pat/IDPat.c 
+
+	gcc -o run LeituraArquivo.c Hash/Hash.c Hash/ListaIngredientes.c Hash/IDHash.c Pat/Patricia.c Pat/IDPat.c && ./run
