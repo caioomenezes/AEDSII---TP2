@@ -161,20 +161,41 @@ int main() {
     int *qtd_termos_documentos; //Quantidade de ingredientes no documento ID_DOC, cada índice representa o número de cada documento
     int total_de_arquivos=0;
     char *nome = "ArquivosdeEntrada/entrada.txt";
-    nome_ingrediente_hash ingredientes[] = {"pinch of unicorn horn", "water"};
-
+    nome_ingrediente_pat ingredientes[] = {"pinch of unicorn horn", "water", "moldy bark"};
+    nome_ingrediente_hash ingredientes1[] = {"pinch of unicorn horn", "water", "moldy bark"};
     Leitura_Principal(nome, &qtd_termos_documentos, &total_de_arquivos);
-    Calcular_Relevancia_Termo_Hash(ingredientes, TabelaIngredientes, qtd_termos_documentos, total_de_arquivos,p, 2);
+    Vetor_Relevancia_Pat* resultado = Calcular_Relevancia_Termo_Pat(ingredientes, Pat, qtd_termos_documentos, total_de_arquivos, 3);
+    putchar('\n');
+    putchar('\n');
+    for(int i = 0; i < total_de_arquivos; i++){
+        printf("%d - %f\n", resultado[i].indice +1, resultado[i].resultado_relevancia);
+    }
+    Vetor_Relevancia_Hash* resultado1 = Calcular_Relevancia_Termo_Hash(ingredientes1, TabelaIngredientes, qtd_termos_documentos, total_de_arquivos,p, 3);
+    putchar('\n');
+    putchar('\n');
+    for(int i = 0; i < total_de_arquivos; i++){
+        printf("%d - %f\n", resultado1[i].indice +1, resultado1[i].resultado_relevancia);
+    }
     //float peso = Calcular_Peso_Termo_Hash(ingrediente,TabelaIngredientes, total_de_arquivos,p,12);
     //printf("%f\n", peso);
 
     /*for(int i = 0; i < total_de_arquivos; i++){
         printf("%d - %d\n" , i+1, qtd_termos_documentos[i]);
-    }*/
+    }
     //Imprime_Hash_Ordenada(TabelaIngredientes);
     int i = 0; // Inicializa o contador de índices
     //putchar('\n');
     //Imprime_Pat(Pat, &i);
+    TipoPatNo* aux = Pesquisa_Pat("bezoar", Pat);
+
+    if (aux != NULL) {
+        // Se a chave for encontrada, imprime o valor
+        printf("Chave encontrada: %s\n", aux->No.Chave);
+    } else {
+        // Se a chave não for encontrada, informa ao usuário
+        printf("Chave não encontrada\n");
+    }*/
+
     return 0;
 }
 

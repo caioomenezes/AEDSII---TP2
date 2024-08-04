@@ -1,5 +1,7 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
 
+#ifndef PATRICIA_H
+#define PATRICIA_H
 #include <sys/time.h>
 #include <string.h>
 #define N 100
@@ -38,3 +40,6 @@ TipoArvore InsereEntre(nome_ingrediente_pat Chave, TipoArvore *pat, int i, char 
 TipoArvore Insere_Pat(nome_ingrediente_pat Chave, TipoArvore *pat, int qtd_ingredientes, int id_doc);
 void Imprime_Pat(TipoArvore arvore, int* i);
 void Inicializa_Pat(TipoArvore* arvore);
+TipoPatNo* Pesquisa_Pat(nome_ingrediente_pat Chave, TipoArvore Pat);
+
+#endif 

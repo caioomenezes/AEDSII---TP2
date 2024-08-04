@@ -10,6 +10,7 @@
 #include "Hash/Hash.h"
 #include "Hash/PesquisaHash.h"
 #include "Pat/Patricia.h"
+#include "Pat/PesquisaPat.h"
 #include <ctype.h>
 
 Pesos p;

@@ -11,7 +11,6 @@
 #define M 17 //Tamanho da tabela Hash   
 #define TAMALFABETO 256
 
-
 typedef unsigned Pesos[N][TAMALFABETO];
 typedef Lista_Ingredientes Hash[M];
 

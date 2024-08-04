@@ -6,7 +6,7 @@ void Inicializa_Pat(TipoArvore* arvore){
   (*arvore) = NULL;
 }
 
-TipoBit RetornaBit(TipoBit i, nome_ingrediente_pat Chave){ /* Retorna o i-esimo TipoBit da chave k a partir da esquerda */
+TipoBit RetornaBit(TipoBit i, nome_ingrediente_pat Chave){ /* Retorna o i-esimo TipoBit da chave Chave a partir da esquerda */
   return Chave[i-1];
 } 
 
@@ -193,5 +193,31 @@ void Imprime_Pat(TipoArvore arvore, int* i) {
             Imprime_Pat(arvore->No.NoInterno.Esq, i);
             Imprime_Pat(arvore->No.NoInterno.Dir, i);
         }
+    }
+}
+
+
+
+TipoPatNo* Pesquisa_Pat(nome_ingrediente_pat Chave, TipoArvore Pat) {
+    // Verifica se o nó atual é nulo
+    if (Pat == NULL) {
+        printf("Árvore vazia ou elemento não encontrado\n");
+        return NULL;
+    }
+
+    // Verifica se o nó atual é um nó terminal e se a chave corresponde
+    if (Retorna_TipoNo(Pat)) { 
+        if (strcmp(Chave, Pat->No.Chave) == 0) {
+            return Pat;
+        } else {
+            return NULL;
+        }
+    }
+
+    // Se o nó não é terminal, decide para qual filho seguir
+    if (RetornaBit(Pat->No.NoInterno.BitDiferenciador, Chave) < Pat->No.NoInterno.LetraDiferenciadora) {
+        return Pesquisa_Pat(Chave, Pat->No.NoInterno.Esq); // Pesquisa no filho esquerdo
+    } else {
+        return Pesquisa_Pat(Chave, Pat->No.NoInterno.Dir); // Pesquisa no filho direito
     }
 }

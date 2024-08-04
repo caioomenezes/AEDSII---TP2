@@ -21,3 +21,18 @@ void Imprime_Indice_Invertido_Hash(Lista_ID_Invertido_Hash* listaIdInvertido);
 int Pesquisa_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int id_doc);
 
 #endif // IDHASH_H
+
+
+
+void Pesquisa(TipoChave k, TipoArvore t)
+{ if (EExterno(t)) 
+  { if (k == t->NO.Chave) 
+    printf("Elemento encontrado\n");
+    else printf("Elemento nao encontrado\n");
+    return;
+  }
+  if (Bit(t->NO.NInterno.Index, k) == 0) 
+  Pesquisa(k, t->NO.NInterno.Esq);
+  else Pesquisa(k, t->NO.NInterno.Dir);
+} 
+
