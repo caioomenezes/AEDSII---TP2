@@ -2,6 +2,9 @@
 
 /* Lista Encadeada dos Ingredientes que estão na Hash
 e carregam, além da palavra, a lista encadeada dos índices invertidos*/ 
+// Arquivo: ListaIngredientes.h
+#ifndef LISTA_INGREDIENTES_H
+#define LISTA_INGREDIENTES_H
 
 #include "IDHash.h"
 #include <string.h>
@@ -28,3 +31,5 @@ void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingredient
 void Imprime_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes);
 int Verifica_Vazio_Ingredientes(Lista_Ingredientes* listaIngredientes);
 void Imprime_Ingrediente(int contador, Celula_Ingrediente** vetor_hash);
+
+#endif // LISTA_INGREDIENTES_H

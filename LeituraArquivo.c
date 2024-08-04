@@ -161,17 +161,20 @@ int main() {
     int *qtd_termos_documentos; //Quantidade de ingredientes no documento ID_DOC, cada índice representa o número de cada documento
     int total_de_arquivos=0;
     char *nome = "ArquivosdeEntrada/entrada.txt";
+    nome_ingrediente_hash ingredientes[] = {"pinch of unicorn horn", "water"};
 
     Leitura_Principal(nome, &qtd_termos_documentos, &total_de_arquivos);
-    
-    for(int i = 0; i < total_de_arquivos; i++){
+    Calcular_Relevancia_Termo_Hash(ingredientes, TabelaIngredientes, qtd_termos_documentos, total_de_arquivos,p, 2);
+    //float peso = Calcular_Peso_Termo_Hash(ingrediente,TabelaIngredientes, total_de_arquivos,p,12);
+    //printf("%f\n", peso);
+
+    /*for(int i = 0; i < total_de_arquivos; i++){
         printf("%d - %d\n" , i+1, qtd_termos_documentos[i]);
-    }
+    }*/
     //Imprime_Hash_Ordenada(TabelaIngredientes);
     int i = 0; // Inicializa o contador de índices
     //putchar('\n');
     //Imprime_Pat(Pat, &i);
-
     return 0;
 }
 

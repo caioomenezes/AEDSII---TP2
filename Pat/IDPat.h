@@ -19,5 +19,6 @@ int Retorna_Tamanho_ID_Pat(Lista_ID_Invertido_Pat* listaIdInvertido);
 int Verifica_Vazio_ID_Pat(Lista_ID_Invertido_Pat* listaIdInvertido);
 void Adiciona_ID_Pat(Lista_ID_Invertido_Pat* listaIdInvertido, int qtd, int id_doc);
 void Imprime_Indice_Invertido_Pat(Lista_ID_Invertido_Pat* listaIdInvertido);
+int Pesquisa_ID_Pat(Lista_ID_Invertido_Pat* listaIdInvertido, int id_doc);
 
 

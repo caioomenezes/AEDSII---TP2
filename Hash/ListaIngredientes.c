@@ -1,5 +1,6 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
 
+
 #include "ListaIngredientes.h"
 
 void Inicializa_Lista_Ingredientes(Lista_Ingredientes* listaIngredientes){ //Estamos utilizando celula cabeca
@@ -62,6 +63,8 @@ void Adiciona_Ingrediente(Lista_Ingredientes* listaIngredientes, nome_ingredient
 
     // Marcar o final da lista
     listaIngredientes->ultimo->prox = NULL;
+
+    
 }
 
 void Imprime_Lista_Ingredientes(Lista_Ingredientes *listaIngredientes) {

@@ -37,8 +37,9 @@ void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredie
   
   unsigned int i = HashingUniversal(ingrediente, p); //Calcula a posicao onde o ingrediente vai ser inserido
   Celula_Ingrediente *aux = Pesquisa_Ingrediente(&TabelaIngredientes[i], ingrediente); // Pesquisamos se o ingrediente já existe na lista de ingredientes
+
+
   if (aux == NULL){ // Se o ingrediente não exister na lista
-    
     Adiciona_Ingrediente(&TabelaIngredientes[i], ingrediente, qtd_ingrediente, id_doc); //Adiciona o ingrediente de acordo com a posicao retornada pelo hashing universal
   }
   else {
@@ -96,4 +97,5 @@ void Imprime_Hash(Hash TabelaIngredientes){
     }
     putchar('\n');
   }
-} 
+}
+

@@ -1,4 +1,7 @@
 //Amanda(5366), Caio(5784), Leticia(5781), Melissa(5384)
+#ifndef IDHASH_H
+#define IDHASH_H
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,5 +22,7 @@ int Retorna_Tamanho_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido);
 int Verifica_Vazio_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido);
 void Adiciona_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int qtd, int id_doc);
 void Imprime_Indice_Invertido_Hash(Lista_ID_Invertido_Hash* listaIdInvertido);
+int Pesquisa_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int id_doc);
 
 
+#endif // IDHASH_H

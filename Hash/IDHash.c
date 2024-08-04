@@ -53,3 +53,17 @@ void Imprime_Indice_Invertido_Hash(Lista_ID_Invertido_Hash* listaIdInvertido){
     printf("NULL)");
     
 } 
+
+int Pesquisa_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int id_doc) {
+    Celula_ID_Hash* aux = listaIdInvertido->primeiro->prox;  // Comeca pela cabeça da lista
+    while (aux != NULL) {
+        // Compara o ID do nó atual com o ID buscado
+        if (aux->id_doc == id_doc) {
+            return aux->qtd;  // ID encontrado
+        }
+        aux = aux->prox;  // Move para o proximo no
+    }
+
+    return 0;  // ID não encontrado
+}
+

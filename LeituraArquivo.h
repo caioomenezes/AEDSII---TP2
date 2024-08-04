@@ -4,10 +4,14 @@
 #include <string.h>
 #include <ctype.h>
 */
+
+#ifndef LEITURA_ARQUIVO_H
+#define LEITURA_ARQUIVO_H
 #include "Hash/Hash.h"
+#include "Hash/PesquisaHash.h"
 #include "Pat/Patricia.h"
 #include <ctype.h>
-#include <math.h>
+
 Pesos p;
 Hash TabelaIngredientes;
 TipoArvore Pat;
@@ -19,3 +23,4 @@ int Leitura_Principal(char *nomearquivo, int **qtd_termos_documentos, int* total
 int Frequencia_Ingrediente(char *receita_str, char *nome_ingrediente); // Conta a frequencia do ingrediente no arquivo
 
 
+#endif // LEITURA_ARQUIVO_H
