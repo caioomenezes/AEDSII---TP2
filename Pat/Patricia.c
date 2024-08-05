@@ -193,6 +193,8 @@ void Imprime_Pat(TipoArvore arvore, int* i) {
             Imprime_Pat(arvore->No.NoInterno.Esq, i);
             Imprime_Pat(arvore->No.NoInterno.Dir, i);
         }
+    } else {
+      printf("Arvore vazia");
     }
 }
 

@@ -53,27 +53,47 @@ Vetor_Relevancia_Pat* Calcular_Relevancia_Termo_Pat(nome_ingrediente_pat* ingred
   for(int i = 0; i< total_de_arquivos; i++){
    // Cálculo de aux com divisão em ponto flutuante
     float aux = 1.0f / qtd_termos_documentos[i];
-    printf("Quantidade de termos em %d: %d\n", i+1, qtd_termos_documentos[i]);
+    //printf("Quantidade de termos em %d: %d\n", i+1, qtd_termos_documentos[i]);
         
     valor_peso = 0;
         
     for (int j = 0; j < qtd_pesquisa; j++) {
       float p = Calcular_Peso_Termo_Pat(ingredientes[j], pat, total_de_arquivos, i);
       valor_peso += p;
-      printf("Peso ingrediente %s no documento %d: %f\n", ingredientes[j], i+1, p);
+      //printf("Peso ingrediente %s no documento %d: %f\n", ingredientes[j], i+1, p);
     }
         
-    printf("\nSoma peso documento %d: %f", i+1, valor_peso);
+    //printf("\nSoma peso documento %d: %f", i+1, valor_peso);
     resultado[i].indice = i; 
     resultado[i].resultado_relevancia = aux*valor_peso;
-    printf("\nResultado relevância do documento %d é %f\n", i+1, resultado[i].resultado_relevancia);
+    //printf("\nResultado relevância do documento %d é %f\n", i+1, resultado[i].resultado_relevancia);
   }
   // Ordena o vetor de relevâncias
   qsort(resultado, total_de_arquivos, sizeof(Vetor_Relevancia_Pat), Comparar_Relevancia_Pat);
 
   return resultado;
 
+}
 
+
+void Pesquisa_Termos_Pat(int* qtd_termos_documentos, int total_de_arquivos, int qtd_termos_busca, nome_ingrediente_pat* ingredientes_busca, char** vetor_pocoes, TipoArvore pat){
+  
+  Vetor_Relevancia_Pat* relevancias = Calcular_Relevancia_Termo_Pat(ingredientes_busca, pat, qtd_termos_documentos, total_de_arquivos, qtd_termos_busca);
+  int contador = 0;
+  for(int i = 0; i < total_de_arquivos; i++){
+    printf("%02d - %f\n", relevancias[i].indice +1, relevancias[i].resultado_relevancia);
+  }
+  for(int i = 0; i < total_de_arquivos; i++){
+    if(relevancias[i].resultado_relevancia > 0){
+      printf("Documento %d:\n%s\n\n", relevancias[i].indice +1, vetor_pocoes[relevancias[i].indice]);
+    }
+    else{      
+      contador++;    
+    }
+  }
+  if(contador == total_de_arquivos){
+    printf("Sua pesquisa não encontrou nenhum documento correspondente");
+  }
 }
 
 

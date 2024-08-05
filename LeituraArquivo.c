@@ -66,12 +66,82 @@ int Leitura_Receita(char *nomearquivo, char **receita_str) {
     fclose(arq);
     return 0;
 }
-
-int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documentos) {
-    char *receita_str = NULL; 
+int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documentos, char ***vetor_pocoes, Pesos p, Hash TabelaIngredientes, TipoArvore* Pat) {
+    // Verifica se a leitura ocorreu de maneira correta
+    if (Leitura_Receita(nomearquivo, &(*vetor_pocoes)[id_doc]) != 0) {
+        return 1;
+    }
     
+    char caminhoCompleto[100] = "ArquivosdeEntrada/";
+    strcat(caminhoCompleto, nomearquivo);
+    FILE *arq = fopen(caminhoCompleto, "r");
+    
+    if (arq == NULL) {
+        printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
+        return 1;
+    }
+
+    char ingrediente[N];
+    char aux;
+    int qtd_ingrediente, total_ingredientes = 0;
+    fgets(ingrediente, sizeof(ingrediente), arq);
+    total_ingredientes++;
+    while (fscanf(arq, "%[^.;]", ingrediente) == 1) {
+        qtd_ingrediente = 0;
+        Letra_Minuscula(ingrediente);
+        qtd_ingrediente = Frequencia_Ingrediente((*vetor_pocoes)[id_doc], ingrediente); // Correção aqui
+        // Chamar função de inserção na hash e na Patricia trie
+        Insere_Hash(ingrediente, p, TabelaIngredientes, qtd_ingrediente, id_doc);
+        *Pat = Insere_Pat(ingrediente, Pat, qtd_ingrediente, id_doc);
+
+        // Le o proximo caractere (tira o ; ou .)
+        fscanf(arq, "%c ", &aux);
+        if (aux == '.') {
+            break;  // Sai do loop ao encontrar o ponto final
+        }
+        total_ingredientes++;
+    }
+    (*qtd_termos_documentos)[id_doc] = total_ingredientes;
+    fclose(arq);
+    return 0;
+}
+
+int Leitura_Principal(char *nomearquivo, int** qtd_termos_documentos, int* total_de_arquivos, char ***vetor_pocoes, Pesos p, Hash TabelaIngredientes, TipoArvore* Pat) {
+    FILE *arq = fopen(nomearquivo, "r");
+    if (arq == NULL) {
+        printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
+        return 1;
+    }
+
+    fscanf(arq, "%d", total_de_arquivos);
+    //Ajusta os tamanhos dos vetores para a qtd de documentos
+    *vetor_pocoes = malloc((*total_de_arquivos) * sizeof(char*));
+    *qtd_termos_documentos = malloc((*total_de_arquivos) * sizeof(int));
+
+    if (*vetor_pocoes == NULL || *qtd_termos_documentos == NULL) {
+        printf("Erro ao alocar memória.\n");
+        fclose(arq);
+        return 1;
+    }
+
+    for (int i = 0; i < (*total_de_arquivos); i++) {
+        char nome_arq[100];
+        fscanf(arq, "%s", nome_arq);
+        if (Leitura_Secundaria(nome_arq, i, qtd_termos_documentos, vetor_pocoes, p, TabelaIngredientes, Pat) != 0) {
+            printf("Erro ao ler o arquivo %s.\n", nome_arq);
+            fclose(arq);
+            return 1;
+        }
+    }
+
+    fclose(arq);
+    return 0;
+}
+
+
+/*int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documentos, char ***vetor_pocoes) {
     //Verifica se a leitura ocorreu de maneira correta
-    if (Leitura_Receita(nomearquivo, &receita_str) != 0) {
+    if (Leitura_Receita(nomearquivo, &(*vetor_pocoes)[id_doc]) != 0) {
         return 1;
     }
     
@@ -89,7 +159,7 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documento
 
     if (arq == NULL) {
         printf("Erro ao abrir o arquivo %s.\n", nomearquivo);
-        free(receita_str); // Liberar a memória antes de sair
+        //free(receita_str); // Liberar a memória antes de sair
         return 1;
     }
 
@@ -101,7 +171,7 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documento
     while (fscanf(arq, "%[^.;]", ingrediente) == 1) {
         qtd_ingrediente = 0;
         Letra_Minuscula(ingrediente);
-        qtd_ingrediente = Frequencia_Ingrediente(receita_str, ingrediente);
+        qtd_ingrediente = Frequencia_Ingrediente(*vetor_pocoes[id_doc], ingrediente);
         //printf("Qtd do ingrediente %s no doc(%d): %d\n", ingrediente, id_doc+1, qtd_ingrediente); // TESTE FUNCAO FREQUENCIA
         Insere_Hash(ingrediente, p, TabelaIngredientes, qtd_ingrediente, id_doc);
         Pat = Insere_Pat(ingrediente, &Pat, qtd_ingrediente, id_doc);
@@ -124,11 +194,11 @@ int Leitura_Secundaria(char *nomearquivo, int id_doc, int **qtd_termos_documento
     }
     (*qtd_termos_documentos)[id_doc] = total_ingredientes;
     fclose(arq);
-    free(receita_str); // Liberar a memoria alocada
+    //free(receita_str); // Liberar a memoria alocada
     return 0;
 }
 
-int Leitura_Principal(char *nomearquivo, int** qtd_termos_documentos, int* total_de_arquivos) {
+int Leitura_Principal(char *nomearquivo, int** qtd_termos_documentos, int* total_de_arquivos, char ***vetor_pocoes) {
     int qtd_arquivos; 
     char nome_arq[100];
     FILE *arq;
@@ -140,20 +210,23 @@ int Leitura_Principal(char *nomearquivo, int** qtd_termos_documentos, int* total
     }
     //Realiza a leitura do meu arquivo principal 
     fscanf(arq, "%d", total_de_arquivos);
-
-    *qtd_termos_documentos = (int*)malloc((*total_de_arquivos) * sizeof(int)); //Ajusta o tamanho do vetor para a qtd de documentos
+    *vetor_pocoes = (char**)malloc((*total_de_arquivos) * sizeof(char*));
+    //*qtd_termos_documentos = malloc((*total_de_arquivos) * sizeof(int));
+    // Aloca memória para o vetor de ponteiros para strings
+    //*vetor_pocoes = malloc((*total_de_arquivos) * sizeof(char*));
+    //*qtd_termos_documentos = (int*)malloc((*total_de_arquivos) * sizeof(int)); //Ajusta o tamanho do vetor para a qtd de documentos
     for (int i = 0; i < (*total_de_arquivos); i++) {
         fscanf(arq, "%s", nome_arq);
-        Leitura_Secundaria(nome_arq, i, qtd_termos_documentos); //Realiza a leitura de uma string e passa para para minusculo
+        Leitura_Secundaria(nome_arq, i, qtd_termos_documentos, vetor_pocoes); //Realiza a leitura de uma string e passa para para minusculo
     }
 
     fclose(arq);
 
     return 0;
-}
+}*/
 
 
-
+/*
 int main() {
     Inicializa_Hash(TabelaIngredientes);
     Inicializa_Pat(&Pat);
@@ -161,10 +234,19 @@ int main() {
     int *qtd_termos_documentos; //Quantidade de ingredientes no documento ID_DOC, cada índice representa o número de cada documento
     int total_de_arquivos=0;
     char *nome = "ArquivosdeEntrada/entrada.txt";
+    char **vetor_pocoes = NULL;
     nome_ingrediente_pat ingredientes[] = {"pinch of unicorn horn", "water", "moldy bark"};
-    nome_ingrediente_hash ingredientes1[] = {"pinch of unicorn horn", "water", "moldy bark"};
-    Leitura_Principal(nome, &qtd_termos_documentos, &total_de_arquivos);
-    Vetor_Relevancia_Pat* resultado = Calcular_Relevancia_Termo_Pat(ingredientes, Pat, qtd_termos_documentos, total_de_arquivos, 3);
+    //nome_ingrediente_hash ingredientes1[] = {"amanda", "caio", "leticia"};
+    Leitura_Principal(nome, &qtd_termos_documentos, &total_de_arquivos, &vetor_pocoes, p, TabelaIngredientes, &Pat);
+    //Imprime_Hash_Ordenada(TabelaIngredientes);
+    int i = 0;
+    putchar('\n');
+
+    Pesquisa_Termos_Pat(qtd_termos_documentos, total_de_arquivos, 3, ingredientes, vetor_pocoes, Pat);
+    //Pesquisa_Termos_Hash(qtd_termos_documentos, total_de_arquivos, 3, ingredientes1, vetor_pocoes, TabelaIngredientes, p);
+
+    Imprime_Pat(Pat, &i);
+    /*Vetor_Relevancia_Pat* resultado = Calcular_Relevancia_Termo_Pat(ingredientes, Pat, qtd_termos_documentos, total_de_arquivos, 3);
     putchar('\n');
     putchar('\n');
     for(int i = 0; i < total_de_arquivos; i++){
@@ -194,9 +276,9 @@ int main() {
     } else {
         // Se a chave não for encontrada, informa ao usuário
         printf("Chave não encontrada\n");
-    }*/
+    }
 
     return 0;
 }
-
+*/
    
