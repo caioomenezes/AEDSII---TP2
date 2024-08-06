@@ -9,7 +9,7 @@
 #define VAZIO  "!!!!!!!!!!"
 #define RETIRADO  "**********" 
 #define M 17 //Tamanho da tabela Hash   
-#define TAMALFABETO 256
+#define TAMALFABETO 256 //usado no calculo do peso
 
 typedef unsigned Pesos[N][TAMALFABETO];
 typedef Lista_Ingredientes Hash[M];
@@ -17,10 +17,11 @@ typedef Lista_Ingredientes Hash[M];
 void GeraPesos(Pesos MatrizPesos);
 unsigned int HashingUniversal(nome_ingrediente_hash Chave, Pesos MatrizPesos);
 void Inicializa_Hash(Hash TabelaIngredientes);
-void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_Doc);
+void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_Doc, int* compara_hash_insere);
 void Imprime_Hash(Hash TabelaIngredientes);
 void Imprime_Hash_Ordenada(Hash TabelaIngredientes);
 int compararIngredientes(const void* a, const void* b);
 void CopiaHash(Hash TabelaIngredientes, int* contador, Celula_Ingrediente** vetor_hash);
+void free_Hash(Hash* TabelaIngrediente);
 
 #endif // HASH_H

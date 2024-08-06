@@ -1,0 +1,8 @@
+Explicações de uso e Execução do programa:
+- Compilação e execução: Para compilar e executar o codigo, estando no diretório dos arquivos, basta executar o comando make no terminal
+- Especificações do computador de teste: O programa foi executado em um Ubuntu 22.04.4 LTS, ou seja, o Makefile foi feito para linux
+- Observações do Makefile: O makefile possui um - lm, pois utilizamos a biblioteca math.h e ele é responsável por linka-la ao programa
+- Observações gerais do projeto: Os arquivos foram organizados em pastas (Hash e Pat), no entanto, isso não é preocupação para o usário, 
+  pois o acesso é feito no Makefile e nos próprios códigos. Além disso, os arquivos de entrada podem ser lidos de qualquer lugar da memória, 
+  desde de que seu caminho seja especificado corretamente e os documentos com as receitas estejam no mesmo diretório do arquivo principal (o qual 
+  possui o nome de cada documento)

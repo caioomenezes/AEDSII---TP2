@@ -18,28 +18,28 @@ typedef enum {
 typedef struct TipoPatNo* TipoArvore; 
 typedef struct TipoPatNo {
     
-  TipoNo tipoNo; //guarda se é interno ou externo
-  union {  //A union permite armazenar diferentes tipos de dados no mesmo espaço de memória. 
+  TipoNo tipoNo; //guarda se e interno ou externo
+  union {  //A union permite armazenar diferentes tipos de dados no mesmo espaco de memoria. 
     struct {
       TipoBit BitDiferenciador;
       TipoArvore Esq, Dir; //Arvore esq e dir, significa que o resto da palavra depois do prefixo
       char LetraDiferenciadora;
     } NoInterno ;
-    //Lista_ID_Invertido_Pat *head_ID;
     nome_ingrediente_pat Chave;
   } No;
   Lista_ID_Invertido_Pat *head_ID;
 } TipoPatNo; 
 
 
-TipoBit RetornaBit(TipoBit i, nome_ingrediente_pat Chave);/* Retorna o i-esimo TipoBit da chave k a partir da esquerda */
-short Retorna_TipoNo(TipoArvore no);
+TipoBit RetornaBit(TipoBit i, nome_ingrediente_pat Chave);// Retorna o i-esimo TipoBit da chave k a partir da esquerda 
+short Retorna_TipoNo(TipoArvore no); //Retorna se o no eh externo ou interno
 TipoArvore CriaNoInt(int i, char letra, TipoArvore *Esq,  TipoArvore *Dir);
 TipoArvore CriaNoExt(nome_ingrediente_pat Chave, int qtd_ingredientes, int id_doc);
-TipoArvore InsereEntre(nome_ingrediente_pat Chave, TipoArvore *pat, int i, char letra_diferenciadora, int qtd_ingredientes, int id_doc);
-TipoArvore Insere_Pat(nome_ingrediente_pat Chave, TipoArvore *pat, int qtd_ingredientes, int id_doc);
+TipoArvore InsereEntre(nome_ingrediente_pat Chave, TipoArvore *pat, int i, char letra_diferenciadora, int qtd_ingredientes, int id_doc, int* compara_pat_insere);
+TipoArvore Insere_Pat(nome_ingrediente_pat Chave, TipoArvore *pat, int qtd_ingredientes, int id_doc, int* compara_pat_insere);
 void Imprime_Pat(TipoArvore arvore, int* i);
 void Inicializa_Pat(TipoArvore* arvore);
-TipoPatNo* Pesquisa_Pat(nome_ingrediente_pat Chave, TipoArvore Pat);
+TipoPatNo* Pesquisa_Pat(nome_ingrediente_pat Chave, TipoArvore Pat, int *compara_pat_pesquisa);
+void free_Pat(TipoArvore arvore);
 
 #endif 

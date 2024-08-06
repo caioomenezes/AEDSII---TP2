@@ -1,7 +1,6 @@
 // Amanda (5366), Caio (5784), Leticia (5781), Melissa (5384)
 #include "Hash.h"
 
-
 void GeraPesos(Pesos MatrizPesos){ 
   //Gera valores randomicos entre 1 e 10.000 
   struct timeval semente;
@@ -33,23 +32,25 @@ void Inicializa_Hash(Hash TabelaIngredientes){
   } 
 }
 
-void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_doc){ 
-  
+
+void Insere_Hash(nome_ingrediente_hash ingrediente, Pesos p, Hash TabelaIngredientes, int qtd_ingrediente, int id_doc, int* compara_hash_insere){ 
   unsigned int i = HashingUniversal(ingrediente, p); //Calcula a posicao onde o ingrediente vai ser inserido
-  Celula_Ingrediente *aux = Pesquisa_Ingrediente(&TabelaIngredientes[i], ingrediente); // Pesquisamos se o ingrediente já existe na lista de ingredientes
+  Celula_Ingrediente *aux = Pesquisa_Ingrediente(&TabelaIngredientes[i], ingrediente); // Pesquisamos se o ingrediente ja existe na lista de ingredientes
 
 
   if (aux == NULL){ // Se o ingrediente não exister na lista
     Adiciona_Ingrediente(&TabelaIngredientes[i], ingrediente, qtd_ingrediente, id_doc); //Adiciona o ingrediente de acordo com a posicao retornada pelo hashing universal
+    (*compara_hash_insere)++;
   }
   else {
-    Adiciona_ID_Hash(aux->head_ID, qtd_ingrediente, id_doc); //Caso o ingrediente já esteja em alguma posicao da hash adicionamos apenas o indice invertido
+    Adiciona_ID_Hash(aux->head_ID, qtd_ingrediente, id_doc); //Caso o ingrediente ja esteja em alguma posicao da hash adicionamos apenas o indice invertido
+    (*compara_hash_insere)++;
   }
-  
 }
 
-//Compara os ingredientes para ordenar através do qsort
+//Compara os ingredientes para ordenar atraves do qsort
 int compararIngredientes(const void* a, const void* b) {
+  
     // Converte os ponteiros para ponteiros de Celula_Ingrediente
     const Celula_Ingrediente* celulaA = *(const Celula_Ingrediente**)a;
     const Celula_Ingrediente* celulaB = *(const Celula_Ingrediente**)b;
@@ -92,10 +93,15 @@ void Imprime_Hash(Hash TabelaIngredientes){
    
   for (int i = 0; i < M; i++){ 
     printf("%02d: ", i+1); // printa o idice formatado, com duas casas decimais
-    if (!Verifica_Vazio_Ingredientes(&TabelaIngredientes[i])){ // Se a posicao não estiver vazia imprime a lista de ingredientes em cada posicao da hash
+    if (!Verifica_Vazio_Ingredientes(&TabelaIngredientes[i])){ // Se a posicao nao estiver vazia imprime a lista de ingredientes em cada posicao da hash
       Imprime_Lista_Ingredientes(&TabelaIngredientes[i]);
     }
     putchar('\n');
   }
 }
 
+void free_Hash(Hash *TabelaIngrediente) {
+    for (int i = 0; i < M; i++) {
+        free_Ingredientes(&(*TabelaIngrediente)[i]); //Liberar cada uma das minhas listas
+    }
+}

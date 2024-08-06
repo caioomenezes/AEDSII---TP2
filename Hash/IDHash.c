@@ -39,31 +39,50 @@ void Adiciona_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int qtd, int id
     listaIdInvertido -> ultimo -> id_doc = id_doc;
     
     listaIdInvertido -> ultimo -> prox = NULL; //Como o prox do ultimo nao aponta para nada, passamos NULL
-    //printf("%d %d\n", listaIdInvertido->ultimo->id_doc, listaIdInvertido->ultimo->qtd);
 
 }
 
+
 void Imprime_Indice_Invertido_Hash(Lista_ID_Invertido_Hash* listaIdInvertido){
+    // Aponta para primeira celula, ignorando a cabeca
     Celula_ID_Hash *Aux = (listaIdInvertido -> primeiro->prox);
     putchar('(');
     while (Aux != NULL) { 
         printf("<%d,%d> -> ", Aux->qtd, Aux->id_doc+1);
+        // Move o ponteiro auxiliar para a próxima célula da lista
         Aux = Aux->prox;
     }
+    //Indica o final da lista
     printf("NULL)");
     
 } 
 
 int Pesquisa_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int id_doc) {
-    Celula_ID_Hash* aux = listaIdInvertido->primeiro->prox;  // Comeca pela cabeça da lista
+    Celula_ID_Hash* aux = listaIdInvertido->primeiro->prox;  // Comeca pela cabeca da lista
     while (aux != NULL) {
-        // Compara o ID do nó atual com o ID buscado
+        // Compara o ID do no atual com o ID buscado
         if (aux->id_doc == id_doc) {
             return aux->qtd;  // ID encontrado
         }
         aux = aux->prox;  // Move para o proximo no
     }
 
-    return 0;  // ID não encontrado
+    return 0;  // ID nao encontrado
 }
 
+void free_ID_Invertido_Hash(Lista_ID_Invertido_Hash *listaIdInvertido) {
+    if (listaIdInvertido == NULL) return;
+
+    Celula_ID_Hash *atual = listaIdInvertido->primeiro;
+    Celula_ID_Hash *aux;
+
+    while (atual != NULL) {
+        aux = atual;
+        atual = atual->prox;
+        free(aux);
+    }
+
+    Inicializa_Lista_ID_Hash(listaIdInvertido); //primeiro e ultimo da minha lista precisam ser null
+    
+    free(listaIdInvertido);
+}

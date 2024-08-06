@@ -23,6 +23,7 @@ int Verifica_Vazio_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido);
 void Adiciona_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int qtd, int id_doc);
 void Imprime_Indice_Invertido_Hash(Lista_ID_Invertido_Hash* listaIdInvertido);
 int Pesquisa_ID_Hash(Lista_ID_Invertido_Hash* listaIdInvertido, int id_doc);
+void free_ID_Invertido_Hash(Lista_ID_Invertido_Hash *lista_ids);
 
 
 #endif // IDHASH_H
